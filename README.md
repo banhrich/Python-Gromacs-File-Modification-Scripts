@@ -1,40 +1,28 @@
+This is a collection of scripts used to modify important and commonly used GROMACS files. The files modified are the ones from Gromacs v4.0.6.
+
 # File Descriptions
-
-// mutate_model.py
-
-MODELLER substitution script. Can be found here: https://salilab.org/modeller/wiki/Mutate%20model
 
 ## edit_not_protein.py
 
-This will substract an ion from the system ( NA+ or CL- ) depending
-on the mutation introduced. This factors in the original residue name
-and mutation residue name to decide which ion and how many to remove.
+This will substract an ion from the system (set to NA+ or CL- ) depending
+on the mutation introduced. This factors in the original residue name (queried via resID)
+and mutation residue name (3-letter code) to decide which ion, if any, to remove. Modification of the ion type may be required for your system if you reuse this script. (Will update for general purposes in the future.)
 
 ## top_add_counts.py
 
-This script will calculate the number of molecules POPC, SOL, NA+, CL-
-in the gro file and append this information to the end of the top file.
+This script will calculate the number of molecules POPC, SOL, NA+, CL- (these can be changed within the file)
+in the gro file and append this information to the end of the top file. The order of the molecules should match the order of the 'final' GRO file.
+
 Should supply the no_protein.gro and topol.top files to this script
 
 ## top_modify.py
 
 Split the topol.top file into a topol.top and prot.itp file. This script
-requires a basefile that contains the content that will go into the 
+requires a base file (base.top) that contains the contents that will go into the 
 topol.top file. (i.e. forcefields). Original topol.top forcefield 
-parameters will likely not be sufficient for the system. Replacing these
-forcefields should help.
+parameters generated from pdb2gmx may not be sufficient. Replacing these
+forcefields with the ones in base.top should help. This script is useful for automation purposes.
 
 ## pnp_merge.py
 
-Merges protein_only.gro and not_protein.gro files. This step follows
-after mutating protein_only.pdb, pdb2gmx AND modifying the not_protein.gro
-file.
-
-
-
-
-
-
-
-
-
+Merges protein_only.gro and not_protein.gro files. This can easily be done in line via Bash as well.
